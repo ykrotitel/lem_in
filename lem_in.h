@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:11:09 by acarlett          #+#    #+#             */
-/*   Updated: 2020/08/04 19:17:51 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/08/04 19:19:05 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <libc.h>
 ​
 # define CAPACITY 13
-;
+
 typedef struct	s_point
 {
 	int 		x;
