@@ -3,101 +3,102 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmittie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/13 22:37:17 by acarlett          #+#    #+#             */
-/*   Updated: 2019/09/26 20:37:25 by acarlett         ###   ########.fr       */
+/*   Created: 2019/09/10 12:45:31 by lmittie           #+#    #+#             */
+/*   Updated: 2020/09/17 18:56:15 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		split(char const *s, char c)
+static void		ft_free(char **arr, size_t i)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
-			j++;
-		i++;
-	}
-	return (j);
+	if (i == 0)
+		return ;
+	while (--i)
+		ft_strdel(&arr[i]);
+	free(arr);
+	arr = NULL;
 }
 
-static char		**make_strsplit(char const *s, char **a, char c)
+static size_t	ft_len(char const *s, char c, size_t *n)
 {
-	int i;
-	int j;
-	int k;
+	size_t	len;
+
+	len = 0;
+	while (*(s + *n) && *(s + *n) == c)
+		*n = *n + 1;
+	while (*(s + *n) && *(s + *n) != c)
+	{
+		len++;
+		*n = *n + 1;
+	}
+	return (len);
+}
+
+static size_t	ft_size(char const *s, char c)
+{
+	size_t	size;
+
+	size = 0;
+	while (*s)
+	{
+		while (*s && *s == c)
+			s++;
+		while (*s && *s != c)
+		{
+			s++;
+			if (*s == '\0' || *s == c)
+				size++;
+		}
+	}
+	return (size);
+}
+
+static void		ft_make_split(char const *s, char **arr, char c)
+{
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	j = 0;
-	while (s[i])
+	while (*s)
 	{
-		k = 0;
-		while (j < split(s, c) && s[i] != c && s[i] != '\0')
+		while (*s == c && *s)
+			s++;
+		if (*s != c && *s)
 		{
-			a[j][k] = s[i];
+			j = 0;
+			while (*s && *s != c)
+				arr[i][j++] = *s++;
 			i++;
-			k++;
 		}
-		if (k != 0)
-		{
-			a[j][k] = '\0';
-			j++;
-		}
-		i++;
 	}
-	a[j] = NULL;
-	return (a);
-}
-
-static void		*ft_free(char **a, int i)
-{
-	while (i != 0)
-		free(a[i--]);
-	return (NULL);
-}
-
-static char		**ft_strsplit_two(char const *s, char **a, char c)
-{
-	int i;
-	int j;
-	int k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	while (s[i])
-	{
-		while (s[i] != c && s[i] != '\0')
-		{
-			i++;
-			j++;
-		}
-		if (j != 0)
-		{
-			if (!(a[k] = (char*)malloc(sizeof(char) * (j + 1))))
-				ft_free(a, k);
-			k++;
-		}
-		j = 0;
-		i++;
-	}
-	return (make_strsplit(s, a, c));
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	char	**a;
+	size_t	size;
+	size_t	n;
+	size_t	i;
+	char	**arr;
 
-	if (!s)
+	if (!s || !c)
 		return (NULL);
-	if (!(a = (char**)malloc(sizeof(char*) * (split(s, c) + 1))))
+	i = 0;
+	size = ft_size(s, c);
+	if (!(arr = (char**)malloc(sizeof(char*) * (size + 1))))
 		return (NULL);
-	return (ft_strsplit_two(s, a, c));
+	n = 0;
+	while (i < size)
+		if (!(arr[i] = ft_strnew(ft_len(s, c, &n))))
+		{
+			ft_free(arr, i);
+			return (NULL);
+		}
+		else
+			i++;
+	arr[i] = NULL;
+	ft_make_split(s, arr, c);
+	return (arr);
 }

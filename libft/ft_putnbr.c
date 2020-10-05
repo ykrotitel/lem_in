@@ -3,33 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarlett <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lmittie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/13 22:49:23 by acarlett          #+#    #+#             */
-/*   Updated: 2019/09/18 18:40:43 by acarlett         ###   ########.fr       */
+/*   Created: 2019/09/08 18:49:00 by lmittie           #+#    #+#             */
+/*   Updated: 2020/09/17 18:56:15 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr(int nb)
+void	ft_putnbr(int n)
 {
-	char	a;
-	int		b;
+	char	str[11];
+	int		i;
 
-	if (nb < 0)
+	i = 0;
+	if (n < 0)
 	{
 		ft_putchar('-');
-		if (nb < -2000000000)
+		if (n < -9)
 		{
-			ft_putchar('2');
-			nb = nb + 2000000000;
+			str[i++] = (n % 10) * -1 + 48;
+			n = n / 10;
 		}
-		nb *= -1;
+		n *= -1;
 	}
-	if (nb >= 10)
-		ft_putnbr(nb / 10);
-	b = nb % 10;
-	a = '0' + b;
-	ft_putchar(a);
+	while (n > 9)
+	{
+		str[i++] = n % 10 + 48;
+		n = n / 10;
+	}
+	str[i] = n % 10 + 48;
+	while (i >= 0)
+		ft_putchar(str[i--]);
 }

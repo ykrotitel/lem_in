@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   bzero.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarlett <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lmittie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 23:22:21 by acarlett          #+#    #+#             */
-/*   Updated: 2019/09/26 21:18:21 by acarlett         ###   ########.fr       */
+/*   Created: 2019/09/04 19:55:01 by lmittie           #+#    #+#             */
+/*   Updated: 2020/09/17 18:56:15 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <string.h>
 
 void	ft_bzero(void *s, size_t n)
 {
-	unsigned long i;
+	unsigned char	*arr;
+	size_t			i;
 
+	arr = s;
 	i = 0;
-	while (i != n)
-	{
-		((unsigned char*)s)[i] = (unsigned char)0;
-		i++;
-	}
+	while (i < n)
+		arr[i++] = 0;
 }

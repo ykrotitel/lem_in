@@ -3,33 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarlett <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lmittie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/13 23:13:22 by acarlett          #+#    #+#             */
-/*   Updated: 2019/09/18 18:39:10 by acarlett         ###   ########.fr       */
+/*   Created: 2019/09/08 19:18:22 by lmittie           #+#    #+#             */
+/*   Updated: 2020/09/17 18:56:15 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int nb, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	a;
-	int		b;
+	char	str[11];
+	int		i;
 
-	if (nb < 0)
+	i = 0;
+	if (n < 0)
 	{
 		ft_putchar_fd('-', fd);
-		if (nb < -2000000000)
+		if (n < -9)
 		{
-			ft_putchar_fd('2', fd);
-			nb = nb + 2000000000;
+			str[i++] = (n % 10) * -1 + 48;
+			n = n / 10;
 		}
-		nb *= -1;
+		n *= -1;
 	}
-	if (nb >= 10)
-		ft_putnbr_fd(nb / 10, fd);
-	b = nb % 10;
-	a = '0' + b;
-	ft_putchar_fd(a, fd);
+	while (n > 9)
+	{
+		str[i++] = n % 10 + 48;
+		n = n / 10;
+	}
+	str[i] = n % 10 + 48;
+	while (i >= 0)
+		ft_putchar_fd(str[i--], fd);
 }

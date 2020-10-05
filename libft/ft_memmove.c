@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarlett <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lmittie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:20:44 by acarlett          #+#    #+#             */
-/*   Updated: 2019/09/18 19:43:43 by acarlett         ###   ########.fr       */
+/*   Created: 2019/09/05 14:39:41 by lmittie           #+#    #+#             */
+/*   Updated: 2020/09/17 18:56:15 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <string.h>
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char	*sr;
-	char	*ds;
-	size_t	i;
+	unsigned char	*d;
+	unsigned char	*s;
 
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	i = 0;
-	sr = (char*)src;
-	ds = (char*)dst;
-	if (sr < ds)
-		while ((int)(--len) >= 0)
-			*(ds + len) = *(sr + len);
+	s = (unsigned char*)src;
+	d = (unsigned char*)dst;
+	if (len == 0 || s == d)
+		return (dst);
+	if (s < d)
+	{
+		s = s + len - 1;
+		d = d + len - 1;
+		while (len--)
+			*d-- = *s--;
+	}
 	else
-		while (i < len)
-		{
-			*(ds + i) = *(sr + i);
-			i++;
-		}
+		while (len--)
+			*d++ = *s++;
 	return (dst);
 }

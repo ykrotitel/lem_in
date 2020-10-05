@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmittie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/13 18:11:22 by acarlett          #+#    #+#             */
-/*   Updated: 2019/09/25 21:49:24 by acarlett         ###   ########.fr       */
+/*   Created: 2019/09/08 15:05:06 by lmittie           #+#    #+#             */
+/*   Updated: 2020/09/17 18:56:15 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	*ft_memalloc(size_t size)
 {
-	void *a;
+	void	*s;
 
-	a = NULL;
-	if (!(a = malloc(sizeof(void *) * size)))
+	if (!(s = malloc(sizeof(void) * size)))
 		return (NULL);
-	ft_bzero(a, size);
-	return (a);
+	ft_bzero(s, size);
+	return (s);
 }

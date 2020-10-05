@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarlett <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lmittie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/12 22:59:50 by acarlett          #+#    #+#             */
-/*   Updated: 2019/09/18 19:01:19 by acarlett         ###   ########.fr       */
+/*   Created: 2019/08/05 22:44:32 by lmittie           #+#    #+#             */
+/*   Updated: 2020/09/17 18:56:15 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *str1, const char *str2, size_t n)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	len2;
 
-	i = -1;
-	j = 0;
-	if (str2[0] == '\0')
-		return ((char *)str1);
-	while (str1[++i] != '\0' && i < n)
+	if (!*needle || needle == haystack)
+		return ((char*)haystack);
+	if (len == 0)
+		return (NULL);
+	i = 0;
+	len2 = ft_strlen(needle);
+	while (*haystack && len-- >= len2)
 	{
-		if (str1[i] == str2[0])
-		{
-			while ((str1[i] == str2[j]) && (str2[j] != '\0') && i < n)
-			{
-				i++;
-				j++;
-			}
-			if (str2[j] == '\0')
-				return ((char *)(&str1[i - j]));
-		}
-		i = i - j;
-		j = 0;
+		while (haystack[i] == needle[i] && needle[i])
+			i++;
+		if (needle[i] == '\0')
+			return ((char*)haystack);
+		i = 0;
+		haystack++;
 	}
-	return (0);
+	return (NULL);
 }
