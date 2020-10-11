@@ -15,7 +15,8 @@
 void	init_structure(t_data *data)
 {
 	(data)->ants_num = -1;
-	(data)->adjacency_matrix = NULL;
+	(data)->edges = NULL;
+	(data)->last_edge_id = NULL;
 	(data)->rooms_number = 0;
 	(data)->id_counter = 0;
 	(data)->start = -1;

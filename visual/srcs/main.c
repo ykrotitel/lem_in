@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 16:08:37 by acarlett          #+#    #+#             */
-/*   Updated: 2020/10/04 20:50:05 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/05 19:41:01 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		main(void)
 
 	init_structure(&data);
 	parse_map(&data);
+	handle_room_number(&data);
 	data.id_start_room = find_id_start_room(data);
 	init_sdl(&data, &vis);
 	render_surface(&data, &vis);

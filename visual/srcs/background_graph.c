@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 15:02:00 by acarlett          #+#    #+#             */
-/*   Updated: 2020/10/04 20:52:45 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/05 20:29:44 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,23 @@ void		draw_and_move_ant(t_visual *vis, t_map_data *data, t_paths **paths)
 	(*paths) = tmp1;
 }
 
-void		reload_solution_display(t_map_data *data, t_visual *vis)
+void		reload_solution_display(t_visual *vis)
 {
 	while (vis->paths->prev != NULL)
 	{
 		vis->paths->id_list = vis->paths->id_list_root;
 		vis->paths->start = 1;
 		vis->paths = vis->paths->prev;
-		if (vis->paths->prev == NULL)
-		{
-			vis->paths->start = 1;
-			vis->paths->id_list = vis->paths->id_list_root;
-		}
 		SDL_RenderPresent(vis->rend);
+	}
+	if (vis->paths->prev == NULL)
+	{
+		vis->paths->start = 1;
+		vis->paths->id_list = vis->paths->id_list_root;
 	}
 }
 
-bool		keys_managment(t_visual *vis, t_map_data *data)
+bool		keys_managment(t_visual *vis)
 {
 	if (vis->event.type == SDL_QUIT)
 		vis->run = false;
@@ -66,12 +66,12 @@ bool		keys_managment(t_visual *vis, t_map_data *data)
 		if (vis->event.key.keysym.sym == SDLK_x)
 			vis->loop = !(vis->loop);
 		if (vis->event.key.keysym.sym == SDLK_z)
-			reload_solution_display(data, vis);
+			reload_solution_display(vis);
 	}
 	return (vis->run);
 }
 
-void		draw_background(t_visual *vis, t_map_data *data)
+void		draw_background(t_visual *vis)
 {
 	vis->pos.w = WIDTH;
 	vis->pos.h = HEIGHT;
@@ -92,19 +92,21 @@ void		background_graph(t_visual *vis, t_map_data *data)
 	while (vis->run)
 	{
 		while (SDL_PollEvent(&(vis->event)))
-			vis->run = keys_managment(vis, data);
+			vis->run = keys_managment(vis);
 		if (vis->loop)
 			continue ;
 		tmp_id = vis->paths->id_list[0];
 		while (vis->paths->next != NULL &&
 							vis->paths->next->id_list[0] != tmp_id)
 			vis->paths = vis->paths->next;
-		draw_background(vis, data);
+		draw_background(vis);
 		draw_links(vis, data);
 		draw_node(vis, data);
 		draw_and_move_ant(vis, data, &(vis->paths));
 		if (vis->paths->next != NULL)
 			vis->paths = vis->paths->next;
 		SDL_RenderPresent(vis->rend);
+		SDL_RenderClear(vis->rend);
+		SDL_Delay(280);
 	}
 }

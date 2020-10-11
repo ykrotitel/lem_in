@@ -18,8 +18,8 @@ static int		cherkes(const char *str)
 
 	i = 0;
 	while (str[i] == ' ' || str[i] == '\v' || str[i] == '\t' ||
-		   str[i] == '\f' || str[i] == '\r' || str[i] == '\n' ||
-		   str[i] == '\f')
+			str[i] == '\f' || str[i] == '\r' || str[i] == '\n' ||
+			str[i] == '\f')
 		i++;
 	if (str[i] == '+' && str[i + 1] >= '0' && str[i + 1] <= '9')
 		i++;
@@ -38,7 +38,7 @@ int				how_digit(const char *str)
 	int i;
 
 	i = 0;
-	while(*str == ' ')
+	while (*str == ' ')
 		str++;
 	if (*str == '+')
 		i++;

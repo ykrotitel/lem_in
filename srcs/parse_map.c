@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 17:58:16 by lmittie           #+#    #+#             */
-/*   Updated: 2020/09/30 20:14:36 by lmittie          ###   ########.fr       */
+/*   Updated: 2020/10/04 20:17:11 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void			parse_map(t_data *data)
 	if (data->start == -1 || data->end == -1)
 		exit(free_data_exit(data, INVALID_ROOMS));
 	parse_links(data);
-	if (!data->adjacency_matrix)
+	if (!data->edges)
 		exit(free_data_exit(data, INVALID_LINKS));
 	ft_putchar('\n');
 }

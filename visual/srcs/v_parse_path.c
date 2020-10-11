@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 17:22:39 by acarlett          #+#    #+#             */
-/*   Updated: 2020/10/05 14:05:45 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/06 17:11:01 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		allocate_memory_to_paths(t_paths **parse, t_paths **prev,
 		exit(MALLOC_ERROR);
 	(*prev) = (*parse);
 	if (!((*parse)->next->id_list = ft_memalloc(sizeof(int) *
-								data->rooms_number)))
+								data->rooms_number + 1)))
 		exit(MALLOC_ERROR);
 	ft_bnegative((*parse)->next->id_list, data->rooms_number);
 	(*parse)->next->id_list_root = (*parse)->next->id_list;
@@ -34,7 +34,6 @@ t_paths		*create_struct(t_map_data *data, t_visual *vis)
 {
 	int		i;
 	t_paths	*parse;
-	t_paths	*root;
 	t_paths *prev;
 
 	i = 0;
@@ -62,17 +61,17 @@ t_paths		*create_struct(t_map_data *data, t_visual *vis)
 void		work_with_split_line(t_room_list *rooms,
 							char **splitted_line, t_paths *paths)
 {
-	int		i;
 	char	**ant_room_name;
 	int		number_curr_ant;
 	int		room_id;
 	t_paths	*root;
 
-	i = 0;
 	root = paths;
-	while (splitted_line[i])
+	root->i = 0;
+	while (splitted_line[root->i])
 	{
-		if (!(ant_room_name = ft_strsplit(splitted_line[i], '-')))
+		if ((ant_room_name = ft_strsplit(splitted_line[root->i], '-')) &&
+		(size_of_matrix_rows(ant_room_name) != 2))
 		{
 			delete_splitted_line(&splitted_line);
 			exit(MALLOC_ERROR);
@@ -83,7 +82,7 @@ void		work_with_split_line(t_room_list *rooms,
 		room_id = return_id_by_name(rooms, ant_room_name[1]);
 		(*paths->id_list) = room_id;
 		paths->id_list++;
-		i++;
+		root->i++;
 		paths = root;
 		delete_splitted_line(&ant_room_name);
 	}
@@ -96,6 +95,11 @@ void		fill_path(t_map_data *data, t_paths *paths)
 
 	while (get_next_line(0, &line) > 0)
 	{
+		if (line[0] == '\0')
+		{
+			ft_strdel(&line);
+			break ;
+		}
 		if ((splitted_line = ft_strsplit(line, ' ')) == NULL)
 		{
 			ft_strdel(&line);
@@ -109,8 +113,6 @@ void		fill_path(t_map_data *data, t_paths *paths)
 
 void		parse_path(t_map_data *data, t_visual *vis)
 {
-	int i;
-
 	vis->paths = create_struct(data, vis);
 	while (vis->paths->prev != NULL)
 		vis->paths = vis->paths->prev;
@@ -118,10 +120,12 @@ void		parse_path(t_map_data *data, t_visual *vis)
 	while (vis->paths->next != NULL)
 	{
 		vis->paths->id_list = vis->paths->id_list_root;
+		if (vis->paths->id_list[0] == -1)
+			exit(1);
 		vis->paths = vis->paths->next;
-		if (vis->paths->next == NULL)
-			vis->paths->id_list = vis->paths->id_list_root;
 	}
+	if (vis->paths->next == NULL)
+		vis->paths->id_list = vis->paths->id_list_root;
 	while (vis->paths->prev != NULL)
 		vis->paths = vis->paths->prev;
 }

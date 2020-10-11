@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 17:54:10 by lmittie           #+#    #+#             */
-/*   Updated: 2020/10/04 20:51:41 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/05 19:53:31 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void		free_delete_exit(char **line, char **splitted_line,
 											int exit_num, t_map_data *data)
 {
 	ft_strdel(line);
+	ft_putstr("Exit Code: ");
 	ft_putnbr(exit_num);
+	write(1, "\n", 1);
 	free_data(data);
 	delete_splitted_line(&splitted_line);
 	exit(exit_num);
@@ -59,7 +61,6 @@ void		free_rooms(t_room_list **room)
 void		free_paths(t_paths **paths)
 {
 	t_paths *tmp;
-	t_paths *root;
 
 	while ((*paths)->prev != NULL)
 	{

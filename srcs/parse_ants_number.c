@@ -6,7 +6,7 @@
 /*   By: lmittie <lmittie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 18:22:52 by lmittie           #+#    #+#             */
-/*   Updated: 2020/09/30 18:51:15 by lmittie          ###   ########.fr       */
+/*   Updated: 2020/10/04 17:31:07 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,8 @@ int		parse_ants_number(void)
 	int		ants_number;
 
 	if (get_next_line(0, &line) <= 0)
-	{
-		ft_strdel(&line);
 		exit(no_free_exit(INVALID_ANTS));
-	}
-	ft_putstr(line);
-	ft_putchar('\n');
+	print_map_line(line);
 	if ((ants_number = ft_atoi(line)) <= 0)
 	{
 		ft_strdel(&line);

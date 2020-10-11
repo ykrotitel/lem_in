@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 18:34:59 by lmittie           #+#    #+#             */
-/*   Updated: 2020/09/30 21:07:04 by lmittie          ###   ########.fr       */
+/*   Updated: 2020/10/05 18:32:09 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ t_room_type		check_if_comment(char **line, t_data *data)
 			exit(free_data_exit(data, MALLOC_ERROR));
 		if (*line)
 		{
-			ft_putstr(*line);
-			ft_putchar('\n');
+			print_map_line(*line);
 			if ((*line)[0] == '#' && (type == START || type == END))
 				return (PARSE_ERROR);
 		}

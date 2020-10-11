@@ -6,11 +6,11 @@
 #    By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/18 15:55:20 by acarlett          #+#    #+#              #
-#    Updated: 2020/10/04 20:31:39 by acarlett         ###   ########.fr        #
+#    Updated: 2020/10/05 19:48:10 by acarlett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS =		-Wall -Werror -Wextra
+FLAGS =		-Wall -Werror -Wextra -o2
 
 DIR_SRC =	srcs
 
@@ -35,6 +35,7 @@ SOURCES =	$(DIR_SRC)/background_graph.c \
 			$(DIR_SRC)/draw_links.c \
 			$(DIR_SRC)/draw_nodes.c \
 			$(DIR_SRC)/draw_ants.c \
+			$(DIR_SRC)/free_show_error.c \
 			$(DIR_SRC)/main.c \
 			$(DIR_SRC)/min_max_coords.c \
 			$(DIR_SRC)/random.c \
@@ -55,10 +56,10 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	@make -C $(DIR_LIB)
-	@cc -o $(NAME) $(SOURCES) -I $(DIR_INC) $(SDL_INC) $(FRAME) $(LIB_NAME)
+	@cc $(FLAGS) -o $(NAME) $(SOURCES) -I $(DIR_INC) $(SDL_INC) $(FRAME) $(LIB_NAME)
 
 %.o: %.c $(INC_NAME)
-	@cc -I $(DIR_INC) $< -c -o $@
+	@cc $(FLAGS) -I $(DIR_INC) $< -c -o $@
 
 clean:
 	@make -C $(DIR_LIB) clean

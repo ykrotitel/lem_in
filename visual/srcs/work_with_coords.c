@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 15:24:56 by acarlett          #+#    #+#             */
-/*   Updated: 2020/10/04 20:54:06 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/06 14:17:32 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,28 @@ void		check_coords(t_map_data *data, t_visual *vis)
 	new_coords(data, vis);
 }
 
+void		always_positive_dalta(t_visual *vis)
+{
+	if (!vis->delta_x)
+		vis->delta_x = 1;
+	if (!vis->delta_y)
+		vis->delta_y = 1;
+}
+
 void		new_coords(t_map_data *data, t_visual *vis)
 {
 	t_room_list	*room;
+	int			for_x;
+	int			for_y;
 
+	if (!(for_x = data->max_coords.max_x - data->max_coords.min_x))
+		for_x = 1;
+	if (!(for_y = data->max_coords.max_y - data->max_coords.min_y))
+		for_y = 1;
 	room = data->rooms;
-	vis->delta_x = (WIDTH - 400) /
-			(data->max_coords.max_x - data->max_coords.min_x);
-	vis->delta_y = (HEIGHT - 400) /
-			(data->max_coords.max_y - data->max_coords.min_y);
+	vis->delta_x = (WIDTH - 400) / for_x;
+	vis->delta_y = (HEIGHT - 400) / for_y;
+	always_positive_dalta(vis);
 	while (room != NULL)
 	{
 		room->room_data->coords.x -= data->max_coords.min_x;

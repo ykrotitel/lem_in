@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 18:59:03 by acarlett          #+#    #+#             */
-/*   Updated: 2020/10/05 14:04:53 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/05 19:51:17 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		handle_room_type(t_map_data *data, t_room_type room_type,
 char *line, int exit_code)
 {
 	if (room_type == PARSE_ERROR)
-		free_strdel_exit(1, data, line, INVALID_ROOMS);
+		free_strdel_exit(2, data, line, exit_code);
 	if (room_type == START)
 		data->start = data->rooms_number;
 	if (room_type == END)

@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 18:22:52 by lmittie           #+#    #+#             */
-/*   Updated: 2020/10/03 17:51:41 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/05 17:32:24 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int		parse_ants_number(void)
 	{
 		ft_putstr("negative size of ants or NULL, it`s impossible\n");
 		exit(INVALID_ANTS);
+	}
+	if (ft_strcmp(line, "ERROR") == 0)
+	{
+		ft_putstr("SECOND ERROR\n");
+		exit(0);
 	}
 	if ((ants_number = ft_atoi(line)) <= 0)
 	{

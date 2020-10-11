@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 18:34:59 by lmittie           #+#    #+#             */
-/*   Updated: 2020/10/04 20:50:40 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/05 17:43:41 by acarlett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,20 @@ t_room_type	check_if_comment(char **line, t_map_data *data)
 	t_room_type type;
 
 	type = DEFAULT;
-	if (!ft_strncmp(*line, "#", 1))
+	if ((*line)[0] == '#')
 	{
 		if (!ft_strcmp(*line, "##start"))
-		{
 			type = (data->start == -1) ? START : PARSE_ERROR;
-		}
 		if (!ft_strcmp(*line, "##end"))
-		{
 			type = (data->end == -1) ? END : PARSE_ERROR;
-		}
 		ft_strdel(line);
-		get_next_line(0, line);
+		if (get_next_line(0, line) < 0)
+			free_show_error(data);
+		if (*line)
+		{
+			if ((*line)[0] == '#' && (type == START || type == END))
+				return (PARSE_ERROR);
+		}
 	}
 	return (type);
 }

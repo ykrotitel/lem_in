@@ -67,7 +67,7 @@ void		free_paths(t_paths **paths)
 	}
 }
 
-void		free_matrix(int ***matrix, int size)
+void		free_matrix(t_edge ***matrix, int size)
 {
 	int i;
 
@@ -91,6 +91,8 @@ void		free_data(t_data *data)
 
 	if (data->direction_id)
 		free(data->direction_id);
+	if (data->last_edge_id)
+		free(data->last_edge_id);
 	if (data->rooms_by_id)
 	{
 		i = 0;
@@ -104,5 +106,5 @@ void		free_data(t_data *data)
 	}
 	free_hash_table(&data->hash_table);
 	free_paths(&data->paths);
-	free_matrix(&data->adjacency_matrix, data->id_counter);
+	free_matrix(&data->edges, data->id_counter);
 }

@@ -6,7 +6,7 @@
 /*   By: lmittie <lmittie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 18:54:50 by lmittie           #+#    #+#             */
-/*   Updated: 2020/09/30 18:10:59 by lmittie          ###   ########.fr       */
+/*   Updated: 2020/10/05 15:10:50 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ static void		add_room_to_path(t_path **path,
 }
 
 static void		pathfinding(int v,
-							t_dinic_data *data,
-							t_paths **paths,
-							const int *dir_id)
+							t_data *data,
+							t_paths **paths)
 {
 	int				to;
 	static int		path_length = 0;
@@ -52,18 +51,18 @@ static void		pathfinding(int v,
 
 	if (v == data->end)
 	{
-		add_room_to_path(&path, v, dir_id, &path_length);
+		add_room_to_path(&path, v, data->direction_id, &path_length);
 		add_path(paths, &path, path_length);
 		path_length = 0;
 		return ;
 	}
 	to = 0;
-	while (to < data->n)
+	while (to < data->last_edge_id[v])
 	{
-		if (data->flow_matrix[v][to] == 1)
+		if (data->edges[v][to].flow == 1)
 		{
-			add_room_to_path(&path, v, dir_id, &path_length);
-			pathfinding(to, data, paths, dir_id);
+			add_room_to_path(&path, v, data->direction_id, &path_length);
+			pathfinding(data->edges[v][to].b, data, paths);
 			if (v != data->start)
 				return ;
 		}
@@ -72,16 +71,14 @@ static void		pathfinding(int v,
 }
 
 void			find_best_path(t_paths **best_paths,
-								t_dinic_data *data,
-								int ants_num,
-								const int *dir_id)
+								t_data *data)
 {
 	t_paths	*current_paths;
 	int		output_lines;
 
 	current_paths = NULL;
-	pathfinding(data->start, data, &current_paths, dir_id);
-	output_lines = count_ants_on_each_path(&current_paths, ants_num);
+	pathfinding(data->start, data, &current_paths);
+	output_lines = count_ants_on_each_path(&current_paths, data->ants_num);
 	current_paths->output_lines = output_lines;
 	if (*best_paths == NULL)
 		*best_paths = current_paths;

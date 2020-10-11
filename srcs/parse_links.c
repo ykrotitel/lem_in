@@ -28,10 +28,7 @@ void	add_link(char *line, t_data *data)
 	if ((room1 == NULL) || (room2 == NULL))
 		exit(free_line_and_splitted_exit(&line,
 				&splitted_line, data, INVALID_LINKS));
-	fill_adjacency_matrix(room1,
-						room2,
-						&(data->adjacency_matrix),
-						data->id_counter);
+	fill_edge_matrix(room1, room2, data, data->id_counter);
 	delete_splitted_line(&splitted_line);
 }
 

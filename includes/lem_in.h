@@ -6,7 +6,7 @@
 /*   By: acarlett <acarlett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 17:31:33 by lmittie           #+#    #+#             */
-/*   Updated: 2020/10/05 14:16:22 by acarlett         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:53:20 by lmittie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct	s_dinic_data
 {
 	int				*ptr;
 	int				*distance;
-	int				**flow_matrix;
 	int				*queue;
 	int				start;
 	int				end;
@@ -78,6 +77,14 @@ typedef struct	s_node
 	struct s_node	*next;
 }				t_node;
 
+typedef struct	s_edge
+{
+	int		a;
+	int		b;
+	int		cap;
+	int		flow;
+}				t_edge;
+
 typedef struct	s_data
 {
 	int				ants_num;
@@ -87,7 +94,8 @@ typedef struct	s_data
 	int				*direction_id;
 	t_node			*hash_table[HASH_TABLE_SIZE];
 	t_paths			*paths;
-	int				**adjacency_matrix;
+	t_edge			**edges;
+	int				*last_edge_id;
 	int				start;
 	int				end;
 }				t_data;
@@ -117,10 +125,8 @@ void			init_structure(t_data *data);
 /*
  ** finding_best_path.c
 */
-void			find_best_path(t_paths **best_paths,
-								t_dinic_data *data,
-								int ants_num,
-								const int *dir_id);
+void			find_best_path(t_paths **best_paths, t_data *data);
+
 /*
  ** add_path.c
 */
@@ -172,11 +178,10 @@ void			parse_rooms(t_data *data);
 /*
  ** adjacency_matrix.c
 */
-int				init_matrix(int ***adjacency_matrix, int size);
-int				fill_adjacency_matrix(t_room_data *room1,
-									t_room_data *room2,
-									int ***adjacency_matrix,
-									int size);
+int				fill_edge_matrix(t_room_data *room1,
+						t_room_data *room2,
+						t_data *data,
+						int size);
 
 /*
  ** error.c
@@ -196,7 +201,7 @@ t_exit_code		no_free_exit(t_exit_code exit_code);
 */
 void			free_data(t_data *data);
 void			free_paths(t_paths **paths);
-void			free_matrix(int ***matrix, int size);
+void			free_matrix(t_edge ***matrix, int size);
 void			free_path(t_path **path);
 
 /*
