@@ -42,7 +42,7 @@ start-2
 ```
 ***Solution****
 ```console
-➜  len git:(master) ✗ ./lem-in < visual/maps/map2.1 
+➜  lem-in git:(master) ✗ ./lem-in < visual/maps/map2.1 
 10
 ##start
 start 0 2
