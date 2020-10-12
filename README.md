@@ -3,7 +3,7 @@
 ### :white_square_button: ***About***
 
 Lem-in is a project of ***School 42***. The aim of that project is to find the best path in digital ant farm. The program receives the data that includes the number of ants, coordinates, room names and links.
-The standard output displays all the information about the ant farm and after that the solution.
+The standard output displays all the information about the ant farm and the solution. The project implements the ***Dinic algorithm***. You can learn more about it [here](https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%94%D0%B8%D0%BD%D0%B8%D1%86%D0%B0).
 
 As a bonus, visualization of the algorithm was made on the SDL library.
 
@@ -15,7 +15,6 @@ Mandatory part 100/100
 
 Bonus part 25/25
 ```
-
 ***Example****
 ```console
 ➜  maps git:(master) cat map2.1
